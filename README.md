@@ -88,7 +88,7 @@ It is accessed through the Certificates navigation option.
 Backend services support both modules under a unified API structure.
 
 This ensures:
-Modular scalability
-Clean architecture
-Centralized authentication & database management
+* Modular scalability
+* Clean architecture
+* Centralized authentication & database management
 
