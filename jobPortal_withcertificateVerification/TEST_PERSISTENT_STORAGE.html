@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Persistent Storage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .test-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .test-result {
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 5px;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        input[type="file"] {
+            padding: 10px;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        
+        .photo-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #667eea;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Persistent Storage Test</h1>
+        <p class="subtitle">Test karein ki aapka data properly save ho raha hai ya nahi</p>
+        
+        <!-- Test 1: IndexedDB Check -->
+        <div class="test-section">
+            <h3>Test 1: IndexedDB Support</h3>
+            <button onclick="testIndexedDB()">Check IndexedDB</button>
+            <div id="test1-result"></div>
+        </div>
+        
+        <!-- Test 2: Save User Profile -->
+        <div class="test-section">
+            <h3>Test 2: Save User Profile</h3>
+            <button onclick="testSaveProfile()">Save Test Profile</button>
+            <button onclick="testLoadProfile()" class="btn-success">Load Profile</button>
+            <div id="test2-result"></div>
+        </div>
+        
+        <!-- Test 3: Profile Photo -->
+        <div class="test-section">
+            <h3>Test 3: Profile Photo Upload</h3>
+            <input type="file" id="test-photo" accept="image/*" onchange="testPhotoUpload(this)">
+            <div id="test3-result"></div>
+            <img id="photo-preview" class="photo-preview" style="display:none;">
+        </div>
+        
+        <!-- Test 4: Data Persistence -->
+        <div class="test-section">
+            <h3>Test 4: Data Persistence Check</h3>
+            <button onclick="testDataPersistence()">Check Saved Data</button>
+            <div id="test4-result"></div>
+        </div>
+        
+        <!-- Test 5: Clear All Data -->
+        <div class="test-section">
+            <h3>Test 5: Clear All Data</h3>
+            <button onclick="testClearData()" class="btn-danger">Clear All Test Data</button>
+            <div id="test5-result"></div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="test-section">
+            <h3>📊 Storage Statistics</h3>
+            <div class="stats" id="storage-stats">
+                <div class="stat-card">
+                    <span class="stat-number" id="stat-profile">-</span>
+                    <span class="stat-label">Profile Saved</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="stat-photo">-</span>
+                    <span class="stat-label">Photo Saved</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="stat-size">-</span>
+                    <span class="stat-label">Total Size</span>
+                </div>
+            </div>
+            <button onclick="updateStats()" class="btn-success">Refresh Stats</button>
+        </div>
+    </div>
+    
+    <script src="script/persistent-storage.js"></script>
+    <script>
+        // Test 1: Check IndexedDB Support
+        async function testIndexedDB() {
+            const result = document.getElementById('test1-result');
+            result.innerHTML = '<div class="test-result info">Testing...</div>';
+            
+            try {
+                if (!window.indexedDB) {
+                    result.innerHTML = '<div class="test-result error">❌ IndexedDB not supported in this browser</div>';
+                    return;
+                }
+                
+                await persistentStorage.initDB();
+                result.innerHTML = '<div class="test-result success">✅ IndexedDB is working perfectly!</div>';
+            } catch (error) {
+                result.innerHTML = `<div class="test-result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Test 2: Save and Load Profile
+        async function testSaveProfile() {
+            const result = document.getElementById('test2-result');
+            result.innerHTML = '<div class="test-result info">Saving profile...</div>';
+            
+            try {
+                const testUser = {
+                    id: 'test@example.com',
+                    name: 'Test User',
+                    email: 'test@example.com',
+                    role: 'jobseeker',
+                    joinDate: new Date().toISOString()
+                };
+                
+                await persistentStorage.saveUserProfile(testUser);
+                result.innerHTML = '<div class="test-result success">✅ Profile saved successfully!</div>';
+                updateStats();
+            } catch (error) {
+                result.innerHTML = `<div class="test-result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testLoadProfile() {
+            const result = document.getElementById('test2-result');
+            result.innerHTML = '<div class="test-result info">Loading profile...</div>';
+            
+            try {
+                const profile = await persistentStorage.getUserProfile('test@example.com');
+                
+                if (profile) {
+                    result.innerHTML = `
+                        <div class="test-result success">
+                            ✅ Profile loaded successfully!<br>
+                            Name: ${profile.name}<br>
+                            Email: ${profile.email}<br>
+                            Role: ${profile.role}<br>
+                            Joined: ${new Date(profile.joinDate).toLocaleDateString()}
+                        </div>
+                    `;
+                } else {
+                    result.innerHTML = '<div class="test-result error">❌ No profile found. Save profile first!</div>';
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="test-result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Test 3: Photo Upload
+        async function testPhotoUpload(input) {
+            const result = document.getElementById('test3-result');
+            const preview = document.getElementById('photo-preview');
+            
+            const file = input.files[0];
+            if (!file) return;
+            
+            result.innerHTML = '<div class="test-result info">Uploading photo...</div>';
+            
+            try {
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    const photoData = {
+                        data: e.target.result,
+                        fileName: file.name,
+                        fileType: file.type,
+                        fileSize: file.size
+                    };
+                    
+                    await persistentStorage.saveProfilePhoto('test@example.com', photoData);
+                    
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    
+                    result.innerHTML = `
+                        <div class="test-result success">
+                            ✅ Photo uploaded successfully!<br>
+                            File: ${file.name}<br>
+                            Size: ${(file.size / 1024).toFixed(2)} KB
+                        </div>
+                    `;
+                    
+                    updateStats();
+                };
+                
+                reader.readAsDataURL(file);
+            } catch (error) {
+                result.innerHTML = `<div class="test-result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Test 4: Data Persistence
+        async function testDataPersistence() {
+            const result = document.getElementById('test4-result');
+            result.innerHTML = '<div class="test-result info">Checking data...</div>';
+            
+            try {
+                const profile = await persistentStorage.getUserProfile('test@example.com');
+                const photo = await persistentStorage.getProfilePhoto('test@example.com');
+                
+                let html = '<div class="test-result success">';
+                html += '✅ Data Persistence Check:<br><br>';
+                html += `Profile: ${profile ? '✅ Saved' : '❌ Not Found'}<br>`;
+                html += `Photo: ${photo ? '✅ Saved' : '❌ Not Found'}<br>`;
+                html += `localStorage: ${localStorage.getItem('userName') ? '✅ Active' : '❌ Empty'}<br>`;
+                html += '</div>';
+                
+                result.innerHTML = html;
+            } catch (error) {
+                result.innerHTML = `<div class="test-result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Test 5: Clear Data
+        async function testClearData() {
+            if (!confirm('Are you sure you want to clear all test data?')) {
+                return;
+            }
+            
+            const result = document.getElementById('test5-result');
+            result.innerHTML = '<div class="test-result info">Clearing data...</div>';
+            
+            try {
+                await persistentStorage.clearAllUserData('test@example.com');
+                
+                result.innerHTML = '<div class="test-result success">✅ All test data cleared!</div>';
+                
+                document.getElementById('photo-preview').style.display = 'none';
+                updateStats();
+            } catch (error) {
+                result.innerHTML = `<div class="test-result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Update Statistics
+        async function updateStats() {
+            try {
+                const profile = await persistentStorage.getUserProfile('test@example.com');
+                const photo = await persistentStorage.getProfilePhoto('test@example.com');
+                
+                document.getElementById('stat-profile').textContent = profile ? '✅' : '❌';
+                document.getElementById('stat-photo').textContent = photo ? '✅' : '❌';
+                
+                let totalSize = 0;
+                if (profile) totalSize += JSON.stringify(profile).length;
+                if (photo) totalSize += photo.photoData.length;
+                
+                document.getElementById('stat-size').textContent = (totalSize / 1024).toFixed(2) + ' KB';
+            } catch (error) {
+                console.error('Stats update error:', error);
+            }
+        }
+        
+        // Auto-run on load
+        window.addEventListener('load', () => {
+            testIndexedDB();
+            updateStats();
+        });
+    </script>
+</body>
+</html>

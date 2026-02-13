@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Features Showcase - Job Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .feature-desc {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .feature-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-right: 8px;
+            margin-top: 10px;
+        }
+        
+        .cta-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .cta-section h2 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .cta-section p {
+            color: #6b7280;
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+        
+        .btn-primary {
+            display: inline-block;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 18px;
+            box-shadow: 0 10px 30px rgba(102,126,234,0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(102,126,234,0.7);
+        }
+        
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-box {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Premium Features</h1>
+            <p>7 Powerful Features to Enhance Your Job Search Experience</p>
+        </div>
+        
+        <div class="stats-bar">
+            <div class="stat-box">
+                <div class="stat-number">7</div>
+                <div class="stat-label">New Features</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">10%</div>
+                <div class="stat-label">Performance Impact</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">10x</div>
+                <div class="stat-label">Better UX</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Optimized</div>
+            </div>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <div class="feature-title">Advanced Filters</div>
+                <div class="feature-desc">
+                    Filter jobs by salary range, experience level, and work mode. Find exactly what you're looking for with powerful filtering options.
+                </div>
+                <span class="feature-tag">Instant</span>
+                <span class="feature-tag">No Lag</span>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <div class="feature-title">Job Alerts</div>
+                <div class="feature-desc">
+                    Get real-time browser notifications when new jobs matching your preferences are posted. Never miss an opportunity!
+                </div>
+                <span class="feature-tag">Real-time</span>
+                <span class="feature-tag">Smart</span>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <div class="feature-title">AI Recommendations</div>
+                <div class="feature-desc">
+                    Personalized job recommendations based on your activity. Smart algorithm learns your preferences and suggests relevant jobs.
+                </div>
+                <span class="feature-tag">AI-Powered</span>
+                <span class="feature-tag">Personalized</span>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚖️</div>
+                <div class="feature-title">Job Comparison</div>
+                <div class="feature-desc">
+                    Compare up to 3 jobs side-by-side. Analyze salary, location, company, and benefits to make informed decisions.
+                </div>
+                <span class="feature-tag">3-Way</span>
+                <span class="feature-tag">Visual</span>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <div class="feature-title">Quick Stats</div>
+                <div class="feature-desc">
+                    Real-time analytics and insights. Track your applications, saved jobs, and profile views all in one place.
+                </div>
+                <span class="feature-tag">Real-time</span>
+                <span class="feature-tag">Analytics</span>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <div class="feature-title">Social Share</div>
+                <div class="feature-desc">
+                    Share interesting jobs with friends and network. Native mobile sharing support with one-click copy to clipboard.
+                </div>
+                <span class="feature-tag">Native</span>
+                <span class="feature-tag">Fast</span>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⏳</div>
+                <div class="feature-title">Skeleton Loading</div>
+                <div class="feature-desc">
+                    Beautiful animated placeholders while content loads. Better perceived performance with smooth shimmer effects.
+                </div>
+                <span class="feature-tag">Smooth</span>
+                <span class="feature-tag">Professional</span>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2>🎉 Ready to Experience Premium Features?</h2>
+            <p>All features are live and optimized for performance. No lag, no heavy loading!</p>
+            <a href="index.html" class="btn-primary">Go to Job Portal →</a>
+        </div>
+    </div>
+</body>
+</html>

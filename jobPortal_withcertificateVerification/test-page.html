@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature Test Page</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .test-section { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; }
+        .test-item { padding: 10px; margin: 5px 0; border-left: 4px solid #ccc; }
+        .working { border-color: #10b981; background: #d1fae5; }
+        .not-working { border-color: #ef4444; background: #fee2e2; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        .status { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Job Portal - Feature Test</h1>
+    <p>Testing all features from index.html...</p>
+    
+    <div id="results"></div>
+    
+    <script>
+        const results = [];
+        
+        function test(name, condition) {
+            const status = condition ? '✅ WORKING' : '❌ NOT WORKING';
+            const className = condition ? 'working' : 'not-working';
+            results.push({ name, status, className, condition });
+        }
+        
+        // Wait for page load
+        window.addEventListener('load', function() {
+            console.log('🧪 Starting tests...');
+            
+            // Test 1: Check if jobs variable exists
+            test('Jobs Data Loaded', typeof jobs !== 'undefined' && jobs && jobs.length > 0);
+            
+            // Test 2: Check main functions
+            test('searchJobs() function', typeof searchJobs === 'function');
+            test('filterByCategory() function', typeof filterByCategory === 'function');
+            test('subscribeNewsletter() function', typeof subscribeNewsletter === 'function');
+            test('displayJobListings() function', typeof displayJobListings === 'function');
+            test('displayAllJobs() function', typeof displayAllJobs === 'function');
+            test('filterAllJobs() function', typeof filterAllJobs === 'function');
+            
+            // Test 3: Check HTML elements
+            test('view-all-jobs-btn element', document.getElementById('view-all-jobs-btn') !== null);
+            test('back-to-home element', document.getElementById('back-to-home') !== null);
+            test('keyword-search element', document.getElementById('keyword-search') !== null);
+            test('location-filter element', document.getElementById('location-filter') !== null);
+            test('newsletter-email element', document.getElementById('newsletter-email') !== null);
+            test('job-listings element', document.getElementById('job-listings') !== null);
+            test('all-jobs-section element', document.getElementById('all-jobs-section') !== null);
+            test('dashboard-section element', document.getElementById('dashboard-section') !== null);
+            test('theme-toggle element', document.getElementById('theme-toggle') !== null);
+            test('dashboard-toggle element', document.getElementById('dashboard-toggle') !== null);
+            
+            // Test 4: Check event listeners
+            const viewAllBtn = document.getElementById('view-all-jobs-btn');
+            test('View All Jobs has click listener', viewAllBtn && viewAllBtn.onclick !== null);
+            
+            const backBtn = document.getElementById('back-to-home');
+            test('Back to Home has click listener', backBtn && backBtn.onclick !== null);
+            
+            // Test 5: Check footer links
+            const footerLinks = document.querySelectorAll('.footer-links a');
+            test('Footer links exist', footerLinks.length > 0);
+            
+            // Test 6: Check category tags
+            const categoryTags = document.querySelectorAll('.category-tag');
+            test('Category tags exist', categoryTags.length > 0);
+            test('Category tags have onclick', categoryTags.length > 0 && categoryTags[0].onclick !== null);
+            
+            // Test 7: Check company logos
+            const companyLogos = document.querySelectorAll('.company-logo');
+            test('Company logos exist', companyLogos.length > 0);
+            
+            // Test 8: Check scripts loaded
+            test('main.js loaded', typeof window.applyToJob === 'function');
+            test('inline-scripts.js loaded', document.getElementById('scroll-top-btn') !== null);
+            test('complete-functionality.js loaded', typeof window.searchJobsEnhanced === 'function');
+            
+            // Display results
+            displayResults();
+        });
+        
+        function displayResults() {
+            const container = document.getElementById('results');
+            
+            const working = results.filter(r => r.condition).length;
+            const total = results.length;
+            const percentage = Math.round((working / total) * 100);
+            
+            let html = `
+                <div class="test-section">
+                    <h2>📊 Test Summary</h2>
+                    <p><strong>${working}/${total}</strong> tests passed (${percentage}%)</p>
+                </div>
+            `;
+            
+            results.forEach(r => {
+                html += `
+                    <div class="test-item ${r.className}">
+                        <span class="status">${r.status}</span> - ${r.name}
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            console.log('✅ Tests complete:', working, '/', total, 'passed');
+            console.log('Failed tests:', results.filter(r => !r.condition).map(r => r.name));
+        }
+    </script>
+    
+    <!-- Load all scripts from index.html -->
+    <script src="script/security.js"></script>
+    <script src="script/toast.js"></script>
+    <script src="script/dashboard.js"></script>
+    <script src="script/api.js"></script>
+    <script src="script/features.js"></script>
+    <script src="script/advanced-features.js"></script>
+    <script src="script/ui-helpers.js"></script>
+    <script src="script/auth.js"></script>
+    <script src="script/main.js"></script>
+    <script src="script/login.js"></script>
+    <script src="script/inline-scripts.js"></script>
+    <script src="script/complete-functionality.js"></script>
+</body>
+</html>

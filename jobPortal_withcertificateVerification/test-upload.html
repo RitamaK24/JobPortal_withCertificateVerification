@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Upload</title>
+</head>
+<body>
+    <h1>Test File Upload</h1>
+    <input type="file" id="file" multiple>
+    <button onclick="upload()">Upload</button>
+    <div id="result"></div>
+
+    <script>
+        async function upload() {
+            const files = document.getElementById('file').files;
+            if (files.length === 0) {
+                alert('Select files first!');
+                return;
+            }
+
+            const token = localStorage.getItem('authToken') || localStorage.getItem('token');
+            console.log('Token:', token);
+
+            const formData = new FormData();
+            for (let file of files) {
+                formData.append('files', file);
+            }
+
+            try {
+                console.log('Uploading to: http://localhost:3001/api/certificates/upload-files');
+                const response = await fetch('http://localhost:3001/api/certificates/upload-files', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                console.log('Response status:', response.status);
+                const data = await response.json();
+                console.log('Response data:', data);
+
+                document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                
+                if (data.success) {
+                    alert('Upload successful!');
+                } else {
+                    alert('Upload failed: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = '<pre>Error: ' + error.message + '</pre>';
+                alert('Error: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

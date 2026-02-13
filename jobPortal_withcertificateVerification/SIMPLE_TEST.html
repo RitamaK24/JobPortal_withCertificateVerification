@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quick Test</title>
+</head>
+<body>
+    <h1>Quick Test - Open Console (F12)</h1>
+    <button onclick="testIndexPage()">Test Index.html Elements</button>
+    
+    <script>
+        function testIndexPage() {
+            // Open index.html in new window
+            const win = window.open('index.html', '_blank');
+            
+            // Wait for it to load
+            setTimeout(() => {
+                console.log('Testing index.html...');
+                
+                // Test if we can access it
+                try {
+                    const btn = win.document.getElementById('view-all-jobs-btn');
+                    console.log('View All Jobs Button:', btn ? '✅ FOUND' : '❌ NOT FOUND');
+                } catch(e) {
+                    console.log('Cannot access - just open index.html directly!');
+                }
+            }, 2000);
+        }
+        
+        // Auto test
+        console.log('🎯 SIMPLE SOLUTION:');
+        console.log('1. Close this page');
+        console.log('2. Open index.html directly');
+        console.log('3. Press F12 for console');
+        console.log('4. Click "View All Jobs" button');
+        console.log('5. It should work!');
+    </script>
+</body>
+</html>

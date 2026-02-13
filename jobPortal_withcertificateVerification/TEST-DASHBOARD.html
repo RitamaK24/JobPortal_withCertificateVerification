@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .test-btn:hover {
+            transform: scale(1.05);
+        }
+        .status {
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .error {
+            color: #ef4444;
+            font-weight: 700;
+        }
+        .success {
+            color: #10b981;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Dashboard Debug Test</h1>
+    
+    <div class="status">
+        <h3>Test Results:</h3>
+        <div id="test-results"></div>
+    </div>
+    
+    <button class="test-btn" onclick="testDashboardButton()">Test Dashboard Button</button>
+    <button class="test-btn" onclick="testDashboardFunction()">Test loadDashboard()</button>
+    <button class="test-btn" onclick="testElements()">Test All Elements</button>
+    <button class="test-btn" onclick="window.location.href='index.html'">Go to Main Page</button>
+    
+    <script>
+        function log(message, isError = false) {
+            const results = document.getElementById('test-results');
+            const p = document.createElement('p');
+            p.className = isError ? 'error' : 'success';
+            p.textContent = (isError ? '❌ ' : '✅ ') + message;
+            results.appendChild(p);
+        }
+        
+        function testDashboardButton() {
+            document.getElementById('test-results').innerHTML = '';
+            log('Testing Dashboard Button...');
+            
+            const btn = document.getElementById('dashboard-toggle');
+            if (btn) {
+                log('Dashboard button found!');
+                btn.click();
+                log('Button clicked!');
+            } else {
+                log('Dashboard button NOT found!', true);
+                log('Button ID should be: dashboard-toggle', true);
+            }
+        }
+        
+        function testDashboardFunction() {
+            document.getElementById('test-results').innerHTML = '';
+            log('Testing loadDashboard() function...');
+            
+            if (typeof loadDashboard === 'function') {
+                log('loadDashboard() function exists!');
+                try {
+                    loadDashboard();
+                    log('Function executed successfully!');
+                } catch (e) {
+                    log('Error executing function: ' + e.message, true);
+                }
+            } else {
+                log('loadDashboard() function NOT found!', true);
+            }
+        }
+        
+        function testElements() {
+            document.getElementById('test-results').innerHTML = '';
+            log('Testing all dashboard elements...');
+            
+            const elements = {
+                'dashboard-toggle': 'Dashboard Toggle Button',
+                'dashboard-section': 'Dashboard Panel',
+                'dashboard-close': 'Dashboard Close Button',
+                'dashboard-content': 'Dashboard Content',
+                'dashboard-overlay': 'Dashboard Overlay'
+            };
+            
+            for (const [id, name] of Object.entries(elements)) {
+                const el = document.getElementById(id);
+                if (el) {
+                    log(`${name} found!`);
+                } else {
+                    log(`${name} NOT found!`, true);
+                }
+            }
+            
+            // Check if scripts are loaded
+            log('Checking scripts...');
+            if (typeof loadDashboard === 'function') {
+                log('dashboard.js loaded!');
+            } else {
+                log('dashboard.js NOT loaded!', true);
+            }
+        }
+        
+        // Auto test on load
+        window.addEventListener('load', () => {
+            setTimeout(testElements, 500);
+        });
+    </script>
+    
+    <!-- Load actual scripts from main page -->
+    <script src="script/security.js"></script>
+    <script src="script/toast.js"></script>
+    <script src="script/dashboard.js"></script>
+    <script src="script/api.js"></script>
+    <script src="script/main.js"></script>
+</body>
+</html>
